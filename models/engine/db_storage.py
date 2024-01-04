@@ -59,8 +59,8 @@ class DBStorage:
           for clss in classes:
             if  cls is classes[clss] or cls is clss:
               obj = self.__session.query(classes[clss]).filter(classes[clss] == id).first()
-                if obj:
-                  return (obj)
+              if obj:
+                return (obj)
         return (None)
 
     def count(self, cls=None):
