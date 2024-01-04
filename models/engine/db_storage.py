@@ -55,11 +55,12 @@ class DBStorage:
         """
         query on the current database session for a specific obj
         """
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                obj = self.__session.query(classes[clss]).filter(classes[clss] == id).first()
+        if cls is not None and id is not None:
+          for clss in classes:
+            if  cls is classes[clss] or cls is clss:
+              obj = self.__session.query(classes[clss]).filter(classes[clss] == id).first()
                 if obj:
-                    return (obj)
+                  return (obj)
         return (None)
 
     def count(self, cls=None):
@@ -68,7 +69,7 @@ class DBStorage:
         """
         totalcount = 0
         for clss in classes:
-            if cls is classes[clss] or cls is clss:
+            if cls is None or cls is classes[clss] or cls is clss:
                 objcount = self.__session.query(classes[clss]).count()
                 totalcount += objcount
         return (totalcount)
