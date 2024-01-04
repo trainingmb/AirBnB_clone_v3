@@ -45,4 +45,4 @@ def rud_state(state_id):
     return ((jsonify(state_obj), 200))
   if request.method == 'DELETE':
     storage.delete(state_obj)
-    return ((jsonify({}), 200)
+    return (jsonify({}), 200)
