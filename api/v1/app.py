@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Version 1 Flask App"""
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -15,6 +15,12 @@ def teardown_db(exception):
   """
   storage.close()
 
+@app.errorhandler(404)
+def page_not_found(e):
+  """
+  Handler for page not found
+  """
+  return (jsonify({'error': 'Not Found'}), 404)
 
 if __name__ == '__main__':
   from api.v1 import HBNB_API_HOST, HBNB_API_PORT
