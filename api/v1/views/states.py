@@ -2,7 +2,7 @@
 """
 Index for V1
 """
-from api.v1.views import app_views, jsonify, abort
+from api.v1.views import app_views, jsonify, abort, request
 from models import storage
 from models.state import State
 
