@@ -7,7 +7,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states')
+@app_views.route('/states', methods = ['POST', 'GET'])
 def all_states():
   """
   Returns a list of all states
@@ -21,9 +21,9 @@ def all_states():
     sud = request.get_json()
     newstate_obj = State(**sud)
     newstate_obj.save()
-    return ((jsonify(newstate_obj), 200))
+    return ((jsonify(newstate_obj.to_dict()), 200))
 
-@app_views.route('/states/<state_id>')
+@app_views.route('/states/<state_id>', methods = ['POST', 'GET', 'DELETE'])
 def rud_state(state_id):
   """
   Get/Modify/Delete state with id <state_id>
@@ -40,9 +40,11 @@ def rud_state(state_id):
     sud = request.get_json()
     for key, value in sud.items():
       if key not in ['id', 'created_at', 'updated_at']:
-        setattr(state_obj, name, value)
+        setattr(state_obj, key, value)
     state_obj.save()
-    return ((jsonify(state_obj), 200))
+    return ((jsonify(state_obj.to_dict()), 200))
   if request.method == 'DELETE':
     storage.delete(state_obj)
+    del state_obj
+    storage.save()
     return (jsonify({}), 200)
