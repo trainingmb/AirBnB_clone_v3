@@ -33,6 +33,7 @@ def all_places(city_id):
     if 'name' not in sud.keys():
       abort(400, 'Missing name')
     newplace_obj = Place(**sud)
+    newplace_obj.city_id = city_obj.id
     newplace_obj.save()
     return (jsonify(newplace_obj.to_dict()), 201)
 
