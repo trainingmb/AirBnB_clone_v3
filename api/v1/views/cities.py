@@ -8,7 +8,7 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', methods = ['POST', 'GET'])
+@app_views.route('/states/<state_id>/cities', methods=['POST', 'GET'], strict_slashes=False)
 def city_states(state_id):
   """
   Relates city and states
@@ -30,7 +30,7 @@ def city_states(state_id):
     newcity.save()
     return ((jsonify(newcity.to_dict()), 201))
 
-@app_views.route('/cities/<city_id>', methods = ['PUT', 'GET', 'DELETE'])
+@app_views.route('/cities/<city_id>', methods=['PUT', 'GET', 'DELETE'])
 def rud_city(city_id):
   """
   Get/Modify/Delete city with id <city_id>
