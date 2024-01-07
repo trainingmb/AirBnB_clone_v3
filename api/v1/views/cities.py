@@ -45,8 +45,6 @@ def rud_city(city_id):
     if not request.is_json:
       abort(400, 'Not a JSON')
     sud = request.get_json()
-    if 'name' not in sud.keys():
-      abort(400, 'Missing name')
     for key, value in sud.items():
       if key not in ['id', 'state_id', 'created_at', 'updated_at']:
         setattr(city_obj, key, value)
