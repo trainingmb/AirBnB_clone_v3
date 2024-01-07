@@ -40,8 +40,6 @@ def rud_amenity(amenity_id):
     if not request.is_json:
       abort(400, 'Not a JSON')
     sud = request.get_json()
-    if 'name' not in sud.keys():
-      abort(400, 'Missing name')
     for key, value in sud.items():
       if key not in ['id', 'created_at', 'updated_at']:
         setattr(amenity_obj, key, value)
