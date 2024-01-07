@@ -17,13 +17,13 @@ def all_states():
     return (jsonify(states))
   if request.method == 'POST':
     if not request.is_json:
-      return abort(400, 'Not a JSON')
+      abort(400, 'Not a JSON')
     sud = request.get_json()
     newstate_obj = State(**sud)
     newstate_obj.save()
-    return ((jsonify(newstate_obj.to_dict()), 200))
+    return ((jsonify(newstate_obj.to_dict()), 201))
 
-@app_views.route('/states/<state_id>', methods = ['POST', 'GET', 'DELETE'])
+@app_views.route('/states/<state_id>', methods = ['PUT', 'GET', 'DELETE'])
 def rud_state(state_id):
   """
   Get/Modify/Delete state with id <state_id>
@@ -34,7 +34,7 @@ def rud_state(state_id):
     abort(404)
   if request.method == 'GET':
     return (jsonify(state_obj.to_dict()))
-  if request.method == 'POST':
+  if request.method == 'PUT':
     if not request.is_json:
       return abort(400, 'Not a JSON')
     sud = request.get_json()
