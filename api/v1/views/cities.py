@@ -13,7 +13,7 @@ def city_states(state_id):
   """
   Relates city and states
   """
-  state_obj = storage.get(States,state_id)
+  state_obj = storage.get(State,state_id)
   if state_obj is None:
     abort(404)
   if request.method == 'GET':
