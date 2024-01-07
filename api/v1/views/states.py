@@ -7,7 +7,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods = ['POST', 'GET'])
+@app_views.route('/states', methods = ['POST', 'GET'], strict_slashes=False)
 def all_states():
   """
   Returns a list of all states
@@ -29,10 +29,6 @@ def rud_state(state_id=None):
   Get/Modify/Delete state with id <state_id>
   if present else returns raises error 404
   """
-  print(state_id)
-  if state_id is None:
-    print(state_id)
-    return all_states()
   state_obj = storage.get(State,state_id)
   if state_obj is None:
     abort(404)
