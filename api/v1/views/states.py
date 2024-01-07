@@ -29,6 +29,7 @@ def rud_state(state_id=None):
   Get/Modify/Delete state with id <state_id>
   if present else returns raises error 404
   """
+  print(state_id)
   if state_id is None:
     print(state_id)
     return all_states()
