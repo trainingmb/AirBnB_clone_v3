@@ -30,6 +30,7 @@ def rud_state(state_id=None):
   if present else returns raises error 404
   """
   if state_id is None:
+    print(state_id)
     return all_states()
   state_obj = storage.get(State,state_id)
   if state_obj is None:
