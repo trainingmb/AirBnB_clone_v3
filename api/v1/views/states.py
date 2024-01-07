@@ -19,6 +19,8 @@ def all_states():
     if not request.is_json:
       abort(400, 'Not a JSON')
     sud = request.get_json()
+    if 'name' not in sud.keys():
+      abort(400, 'Missing name')
     newstate_obj = State(**sud)
     newstate_obj.save()
     return ((jsonify(newstate_obj.to_dict()), 201))
@@ -38,8 +40,6 @@ def rud_state(state_id=None):
     if not request.is_json:
       return abort(400, 'Not a JSON')
     sud = request.get_json()
-    if 'name' not in sud.keys():
-      return (abort(400, 'Missing name'))
     for key, value in sud.items():
       if key not in ['id', 'created_at', 'updated_at']:
         setattr(state_obj, key, value)
