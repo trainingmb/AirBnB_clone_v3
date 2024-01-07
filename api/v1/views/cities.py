@@ -28,7 +28,7 @@ def city_states(state_id):
     newcity = City(**sud)
     newcity.state_id = state_obj.id
     newcity.save()
-    return ((jsonify(newcity.to_dict()), 200))
+    return ((jsonify(newcity.to_dict()), 201))
 
 @app_views.route('/cities/<city_id>', methods = ['PUT', 'GET', 'DELETE'])
 def rud_city(city_id):
@@ -43,10 +43,10 @@ def rud_city(city_id):
     return (jsonify(city_obj.to_dict()))
   if request.method == 'PUT':
     if not request.is_json:
-      return abort(400, 'Not a JSON')
+      abort(400, 'Not a JSON')
     sud = request.get_json()
     if 'name' not in sud.keys():
-      return (abort(400, 'Missing name'))
+      abort(400, 'Missing name')
     for key, value in sud.items():
       if key not in ['id', 'state_id', 'created_at', 'updated_at']:
         setattr(city_obj, key, value)
