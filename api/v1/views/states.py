@@ -38,6 +38,8 @@ def rud_state(state_id):
     if not request.is_json:
       return abort(400, 'Not a JSON')
     sud = request.get_json()
+    if 'name' not in sud.keys():
+      return (abort(400, 'Missing name'))
     for key, value in sud.items():
       if key not in ['id', 'created_at', 'updated_at']:
         setattr(state_obj, key, value)
