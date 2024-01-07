@@ -44,11 +44,11 @@ def rud_user(user_id):
     sud = request.get_json()
     for key, value in sud.items():
       if key not in ['id', 'email', 'created_at', 'updated_at']:
-        setattr(state_obj, key, value)
-    state_obj.save()
-    return (jsonify(state_obj.to_dict()), 200)
+        setattr(user_obj, key, value)
+    user_obj.save()
+    return (jsonify(user_obj.to_dict()), 200)
   if request.method == 'DELETE':
-    storage.delete(state_obj)
-    del state_obj
+    storage.delete(user_obj)
+    del user_obj
     storage.save()
     return (jsonify({}), 200)
