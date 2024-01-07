@@ -17,7 +17,7 @@ def all_users():
     return (jsonify(users))
   if request.method == 'POST':
     if not request.is_json:
-      return abort(400, 'Not a JSON')
+      abort(400, 'Not a JSON')
     sud = request.get_json()
     if 'email' not in sud.keys():
       abort(400, 'Missing email')
@@ -40,7 +40,7 @@ def rud_user(user_id):
     return (jsonify(user_obj.to_dict()))
   if request.method == 'PUT':
     if not request.is_json:
-      return abort(400, 'Not a JSON')
+      abort(400, 'Not a JSON')
     sud = request.get_json()
     for key, value in sud.items():
       if key not in ['id', 'email', 'created_at', 'updated_at']:
