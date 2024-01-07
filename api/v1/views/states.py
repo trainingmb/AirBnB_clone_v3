@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Index for V1
+API Base for stae based actions
 """
 from api.v1.views import app_views, jsonify, abort, request
 from models import storage
