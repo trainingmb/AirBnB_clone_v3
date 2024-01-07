@@ -24,11 +24,13 @@ def all_states():
     return ((jsonify(newstate_obj.to_dict()), 201))
 
 @app_views.route('/states/<state_id>', methods = ['PUT', 'GET', 'DELETE'])
-def rud_state(state_id):
+def rud_state(state_id=None):
   """
   Get/Modify/Delete state with id <state_id>
   if present else returns raises error 404
   """
+  if state_id is None:
+    return all_states()
   state_obj = storage.get(State,state_id)
   if state_obj is None:
     abort(404)
