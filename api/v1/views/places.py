@@ -4,9 +4,9 @@ API Base for place based actions
 """
 from api.v1.views import app_views, jsonify, abort, request
 from models import storage
-from models.cities import City
-from model.users import User
-from model.places import Place
+from models.city import City
+from models.place import Place
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST', 'GET'], strict_slashes=False)
