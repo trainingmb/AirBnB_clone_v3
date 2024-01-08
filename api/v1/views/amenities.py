@@ -19,7 +19,7 @@ def all_amenities():
     if not request.is_json:
       abort(400, 'Not a JSON')
     sud = request.get_json()
-    if 'name' is not in sud.keys():
+    if 'name' not in sud.keys():
       abort(400, 'Missing name')
     newamenity = Amenity(**sud)
     newamenity.save()
