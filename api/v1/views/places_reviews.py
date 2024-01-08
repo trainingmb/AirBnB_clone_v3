@@ -4,8 +4,8 @@ API Base for place reviews based actions
 """
 from api.v1.views import app_views, jsonify, abort, request
 from models import storage
-from models.places import Place
-from models.reviews import Review
+from models.place import Place
+from models.review import Review
 from models.state import State
 
 
