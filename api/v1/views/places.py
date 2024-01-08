@@ -48,7 +48,7 @@ def rud_place(state_id):
     Get/Modify/Delete place with id <place_id>
     if present else returns raises error 404
     """
-    place_obj = storage.get(Place,place_id)
+    place_obj = storage.get(Place, place_id)
     if place_obj is None:
         abort(404)
     if request.method == 'GET':
