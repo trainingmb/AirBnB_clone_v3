@@ -10,7 +10,9 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['POST', 'GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews',
+                 methods=['POST', 'GET'],
+                 strict_slashes=False)
 def places_reviews(place_id):
     """
     Returns a list of all place reviews
@@ -55,7 +57,8 @@ def rud_review(review_id):
             abort(400, 'Not a JSON')
         sud = request.get_json()
         for key, value in sud.items():
-            if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
+            names = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
+            if key not in names:
                 setattr(review_obj, key, value)
         review_obj.save()
         return (jsonify(review_obj.to_dict()), 200)
