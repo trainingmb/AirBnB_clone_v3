@@ -14,14 +14,14 @@ class User(BaseModel, Base):
     if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
-        password = Column(String(128), nullable=False)
+        __password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
         places = relationship("Place", backref="user")
         reviews = relationship("Review", backref="user")
     else:
         email = ""
-        password = ""
+        __password = ""
         first_name = ""
         last_name = ""
 
@@ -29,10 +29,19 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
 
+
+    @property
+    def password(self):
+        """
+        Defines the password property
+        """
+        return self.__password
+
+
     @password.setter
     def password(self, nvalue):
         """
         Performs the MD5 on the password
         """
         r = hashlib.md5(nvalue.encode())
-        self.password = r.hexdigest()
+        self.__password = r.hexdigest()
