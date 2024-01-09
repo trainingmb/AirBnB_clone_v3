@@ -41,8 +41,7 @@ def all_places(city_id):
 
 
 @app_views.route('/places/<place_id>',
-                 methods=['PUT', 'GET', 'DELETE'],
-                 strict_slashes=False)
+                 methods=['PUT', 'GET', 'DELETE'])
 def rud_place(place_id):
     """
     Get/Modify/Delete place with id <place_id>
