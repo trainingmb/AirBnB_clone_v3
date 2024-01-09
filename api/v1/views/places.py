@@ -43,7 +43,7 @@ def all_places(city_id):
 @app_views.route('/places/<place_id>',
                  methods=['PUT', 'GET', 'DELETE'],
                  strict_slashes=False)
-def rud_place(state_id):
+def rud_place(place_id):
     """
     Get/Modify/Delete place with id <place_id>
     if present else returns raises error 404
