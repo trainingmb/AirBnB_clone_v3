@@ -29,7 +29,7 @@ def all_places(city_id):
         if 'user_id' not in sud.keys():
             abort(400, 'Missing user_id')
         else:
-            user_obj = storage.get(User,user_id)
+            user_obj = storage.get(User, sud.get('user_id'))
             if user_obj is None:
                 abort(404)
         if 'name' not in sud.keys():
