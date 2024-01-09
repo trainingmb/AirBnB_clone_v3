@@ -3,17 +3,16 @@
 API Base for place reviews based actions
 """
 from api.v1.views import app_views, jsonify, abort, request
+import models
 from models import storage
 from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
+from models.amenity import Amenity
 
 
-@app_views.route('/places/<place_id>/reviews',
-                 methods=['POST', 'GET'],
+@app_views.route('/places/<place_id>/amenities',
+                 methods=['GET'],
                  strict_slashes=False)
-def places_reviews(place_id):
+def places_amenities(place_id):
     """
     Returns a list of all place reviews
     """
@@ -21,49 +20,40 @@ def places_reviews(place_id):
     if place_obj is None:
         abort(404)
     if request.method == 'GET':
-        reviews = [i.to_dict() for i in place_obj.reviews]
-        return (jsonify(reviews))
-    if request.method == 'POST':
-        if not request.is_json:
-            abort(400, 'Not a JSON')
-        sud = request.get_json()
-        if 'user_id' not in sud.keys():
-            abort(400, 'Missing user_id')
-        else:
-            user_obj = storage.get(User, sud['user_id'])
-            if user_obj is None:
-                abort(404)
-        if 'text' not in sud.keys():
-            abort(400, 'Missing text')
-        sud['place_id'] = place_obj.id
-        newreview_obj = Review(**sud)
-        newreview_obj.save()
-        return (jsonify(newreview_obj.to_dict()), 201)
+        amenities = [i.to_dict() for i in place_obj.amenities]
+        return (jsonify(amenities))
 
 
-@app_views.route('/reviews/<review_id>', methods=['PUT', 'GET', 'DELETE'])
-def rud_review(review_id):
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 methods=['POST', 'DELETE'])
+def rud_place_amenity(place_id, amenity_id):
     """
-    Get/Modify/Delete review with id <review_id>
+    Link/Delete amenity from place
     if present else returns raises error 404
     """
-    review_obj = storage.get(Review, review_id)
-    if review_obj is None:
+    place_obj = storage.get(Place, place_id)
+    if place_obj is None:
         abort(404)
-    if request.method == 'GET':
-        return (jsonify(review_obj.to_dict()))
-    if request.method == 'PUT':
-        if not request.is_json:
-            abort(400, 'Not a JSON')
-        sud = request.get_json()
-        for key, value in sud.items():
-            names = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
-            if key not in names:
-                setattr(review_obj, key, value)
-        review_obj.save()
-        return (jsonify(review_obj.to_dict()), 200)
+    amenity_obj = storage.get(Amenity, amenity_id)
+    if amenity_obj is None:
+        abort(404)
+    if request.method == 'POST':
+        if amenity_obj in place_obj.amenities:
+            return (jsonify(amenity_obj.to_dict()), 200)
+        if models.storage_t != 'db':
+            setattr(amenity_obj, 'place_id', place_obj.id)
+            amenity_obj.save()
+        else:
+            place_obj.amenities.append(amenity_obj)
+            place_obj.save()
+        return (jsonify(amenity_obj.to_dict()), 201)
     if request.method == 'DELETE':
-        storage.delete(review_obj)
-        del review_obj
-        storage.save()
+        if amenity_obj not in place_obj.amenities:
+            abort(404)
+        if models.storage_t != 'db':
+            setattr(amenity_obj, 'place_id', '')
+            amenity_obj.save()
+        else:
+            place_obj.amenities.remove(amenity_obj)
+            place_obj.save()
         return (jsonify({}), 200)
