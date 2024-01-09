@@ -17,7 +17,7 @@ def all_amenities():
         return (jsonify(amenities))
     if request.method == 'POST':
         if not request.is_json:
-          abort(400, 'Not a JSON')
+            abort(400, 'Not a JSON')
         sud = request.get_json()
         if 'name' not in sud.keys():
             abort(400, 'Missing name')
@@ -39,11 +39,11 @@ def rud_amenity(amenity_id):
         return (jsonify(amenity_obj.to_dict()))
     if request.method == 'PUT':
         if not request.is_json:
-          abort(400, 'Not a JSON')
+            abort(400, 'Not a JSON')
         sud = request.get_json()
         for key, value in sud.items():
-          if key not in ['id', 'created_at', 'updated_at']:
-            setattr(amenity_obj, key, value)
+            if key not in ['id', 'created_at', 'updated_at']:
+                setattr(amenity_obj, key, value)
         amenity_obj.save()
         return (jsonify(amenity_obj.to_dict()), 200)
     if request.method == 'DELETE':
