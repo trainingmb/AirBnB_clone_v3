@@ -68,7 +68,6 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        key_name = "_" + self.__class__.__name__ + "__password"
         if not retain:
             for i in new_dict.keys():
                 if "__password" in i:
