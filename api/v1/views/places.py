@@ -16,7 +16,7 @@ def all_places(city_id):
     """
     Returns a list of all states
     """
-    city_obj = storage.get(City,city_id)
+    city_obj = storage.get(City, city_id)
     if city_obj is None:
         abort(404)
     if request.method == 'GET':
