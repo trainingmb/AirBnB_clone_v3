@@ -11,6 +11,7 @@ app.register_blueprint(app_views)
 app.config['CORS_HEADERS'] = 'Content-Type'
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """
