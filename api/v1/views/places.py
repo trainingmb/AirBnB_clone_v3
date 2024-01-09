@@ -4,9 +4,12 @@ API Base for place based actions
 """
 from api.v1.views import app_views, jsonify, abort, request
 from models import storage
+from models.amenity import Amenity
 from models.city import City
 from models.place import Place
+from models.state import State
 from models.user import User
+
 
 
 @app_views.route('/cities/<city_id>/places',
@@ -66,3 +69,32 @@ def rud_place(place_id):
         del place_obj
         storage.save()
         return (jsonify({}), 200)
+
+
+@app_views.route('/places_search',
+                 methods=['POST'])
+def search_places(place_id):
+    """
+    Search for Places by State, cities and amenities
+    """
+    if request.method == 'POST':
+        if not request.is_json:
+            abort(400, 'Not a JSON')
+        sud = request.get_json()
+        if len(sud) == 0 or \
+           (sum([len(sud[i]) for i in sud.keys()] == 0):
+               return (jsonify([i.to_dict() for i in storage.get(Place).values()]))
+        cities = []
+        for st_id in sud.get('states', []):
+            st_obj = storage.get(State, st_id)
+            if st_obj is not None:
+                for ct in st_obj.cities:
+                    cities.append(ct)
+        for ct_id in sud.get('cities', []):
+            ct_obj = storage.get(City, ct_id)
+            if ct_obj is not None and ct_obj not in cities:
+                cities.append(ct_obj)
+        amenities = []
+        for am_id in 
+        places = []
+        
