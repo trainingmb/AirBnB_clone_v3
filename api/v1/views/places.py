@@ -95,6 +95,14 @@ def search_places(place_id):
             if ct_obj is not None and ct_obj not in cities:
                 cities.append(ct_obj)
         amenities = []
-        for am_id in 
+        for am_id in sud.get('amenities', []):
+          am_obj = storage.get(Amenity, am_id)
+          if am_obj is not None:
+            amenities.append(am_obj)
         places = []
-        
+      for ct_obj in cities:
+        for place_obj in ct_obj.places:
+          am_pres = sum([i in place_obj.amenities for i in amenities]) == len(amenities)
+          if am_pres:
+            places.append(place_obj.to_dict())
+      return (jsonify(places), 200)
