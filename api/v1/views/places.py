@@ -72,7 +72,7 @@ def rud_place(place_id):
 
 @app_views.route('/places_search',
                  methods=['POST'])
-def search_places(place_id):
+def search_places():
     """
     Search for Places by State, cities and amenities
     """
