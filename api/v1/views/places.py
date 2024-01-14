@@ -82,8 +82,8 @@ def search_places():
         sud = request.get_json()
         if len(sud) == 0 or \
            (sum([len(sud[i]) for i in sud.keys()]) == 0):
-                 return (jsonify([i.to_dict()
-                                  for i in storage.all(Place).values()]))
+               return (jsonify([i.to_dict()
+                                for i in storage.all(Place).values()]))
         cities = []
         for st_id in sud.get('states', []):
             st_obj = storage.get(State, st_id)
