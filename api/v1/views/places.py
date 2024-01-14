@@ -11,7 +11,6 @@ from models.state import State
 from models.user import User
 
 
-
 @app_views.route('/cities/<city_id>/places',
                  methods=['POST', 'GET'],
                  strict_slashes=False)
@@ -83,7 +82,8 @@ def search_places(place_id):
         sud = request.get_json()
         if len(sud) == 0 or \
            sum([len(sud[i]) for i in sud.keys()] == 0):
-               return (jsonify([i.to_dict() for i in storage.get(Place).values()]))
+               return (jsonify([i.to_dict() \
+                                for i in storage.get(Place).values()]))
         cities = []
         for st_id in sud.get('states', []):
             st_obj = storage.get(State, st_id)
@@ -96,13 +96,14 @@ def search_places(place_id):
                 cities.append(ct_obj)
         amenities = []
         for am_id in sud.get('amenities', []):
-          am_obj = storage.get(Amenity, am_id)
-          if am_obj is not None:
-            amenities.append(am_obj)
+            am_obj = storage.get(Amenity, am_id)
+            if am_obj is not None:
+                amenities.append(am_obj)
         places = []
         for ct_obj in cities:
-          for place_obj in ct_obj.places:
-            am_pres = sum([i in place_obj.amenities for i in amenities]) == len(amenities)
-            if am_pres:
-              places.append(place_obj.to_dict())
+            for place_obj in ct_obj.places:
+                am = sum([i in place_obj.amenities for i in amenities]) \
+                          == len(amenities)
+                if am:
+                  places.append(place_obj.to_dict())
         return (jsonify(places), 200)
