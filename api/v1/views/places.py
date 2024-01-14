@@ -81,7 +81,7 @@ def search_places():
             abort(400, 'Not a JSON')
         sud = request.get_json()
         if len(sud) == 0 or \
-           sum([len(sud[i]) for i in sud.keys()] == 0):
+           (sum([len(sud[i]) for i in sud.keys()]) == 0):
                return (jsonify([i.to_dict() \
                                 for i in storage.get(Place).values()]))
         cities = []
