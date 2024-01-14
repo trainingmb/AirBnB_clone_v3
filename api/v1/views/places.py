@@ -99,10 +99,12 @@ def search_places():
             am_obj = storage.get(Amenity, am_id)
             if am_obj is not None:
                 amenities.append(am_obj)
+        return (jsonify([i.to_dict() for i in amenities])) 
         places = []
         for ct_obj in cities:
             for place_obj in ct_obj.places:
-                am = sum([i in place_obj.amenities for i in amenities]) \
+                plc_am = place_obj.amenities
+                am = sum([i in plc_am for i in amenities]) \
                           == len(amenities)
                 if am:
                     places.append(place_obj.to_dict())
