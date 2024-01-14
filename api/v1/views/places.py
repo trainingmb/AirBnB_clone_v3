@@ -82,7 +82,7 @@ def search_places(place_id):
             abort(400, 'Not a JSON')
         sud = request.get_json()
         if len(sud) == 0 or \
-           (sum([len(sud[i]) for i in sud.keys()] == 0):
+           sum([len(sud[i]) for i in sud.keys()] == 0):
                return (jsonify([i.to_dict() for i in storage.get(Place).values()]))
         cities = []
         for st_id in sud.get('states', []):
@@ -100,9 +100,9 @@ def search_places(place_id):
           if am_obj is not None:
             amenities.append(am_obj)
         places = []
-      for ct_obj in cities:
-        for place_obj in ct_obj.places:
-          am_pres = sum([i in place_obj.amenities for i in amenities]) == len(amenities)
-          if am_pres:
-            places.append(place_obj.to_dict())
-      return (jsonify(places), 200)
+        for ct_obj in cities:
+          for place_obj in ct_obj.places:
+            am_pres = sum([i in place_obj.amenities for i in amenities]) == len(amenities)
+            if am_pres:
+              places.append(place_obj.to_dict())
+        return (jsonify(places), 200)
